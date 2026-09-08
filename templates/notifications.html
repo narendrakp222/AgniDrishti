@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications | AgniDrishti{% endblock %}
+{% block page_kicker %}Emergency Notification Center{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>Notification Center</h1>
+    <p>Prioritized operational alerts requiring review or response.</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#dbeafe;color:#2563eb"><i class="bi bi-bell-fill"></i></div><div class="stat-label">Total Notifications</div><div class="stat-value">{{ total_notifications }}</div><div class="text-muted small">Active alert records</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fee2e2;color:#ef4444"><i class="bi bi-exclamation-octagon-fill"></i></div><div class="stat-label">Critical Alerts</div><div class="stat-value text-danger">{{ critical_alerts }}</div><div class="text-muted small">Immediate action required</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#ffedd5;color:#f97316"><i class="bi bi-exclamation-triangle-fill"></i></div><div class="stat-label">High Alerts</div><div class="stat-value" style="color:#f97316">{{ high_alerts }}</div><div class="text-muted small">Field review recommended</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fef9c3;color:#a16207"><i class="bi bi-eye-fill"></i></div><div class="stat-label">Medium Alerts</div><div class="stat-value" style="color:#a16207">{{ medium_alerts }}</div><div class="text-muted small">Continue monitoring</div></div></div>
+    </div>
+
+    <div class="section-title">Prioritized Alerts</div>
+    <div class="notification-list">
+        {% for row in notifications %}
+        <article class="notification-card notification-{{ row.escalation_level|lower }}">
+            <div class="notification-icon"><i class="bi {% if row.escalation_level == 'CRITICAL' %}bi-exclamation-octagon-fill{% elif row.escalation_level == 'HIGH' %}bi-exclamation-triangle-fill{% elif row.escalation_level == 'MEDIUM' %}bi-eye-fill{% else %}bi-info-circle-fill{% endif %}"></i></div>
+            <div class="notification-content">
+                <div class="d-flex flex-wrap align-items-center gap-2"><span class="badge {% if row.escalation_level == 'CRITICAL' %}bg-danger{% elif row.escalation_level == 'HIGH' %}bg-warning text-dark{% elif row.escalation_level == 'MEDIUM' %}bg-warning text-dark{% else %}bg-success{% endif %}">{{ row.escalation_level }}</span><span class="notification-location"><i class="bi bi-geo-alt"></i> {{ row.latitude }}, {{ row.longitude }}</span></div>
+                <div class="notification-metrics"><span><small>GeoRisk</small><strong>{{ row.georisk_score }}</strong></span><span><small>Alert Type</small><strong>Thermal Incident</strong></span></div>
+                <p class="notification-message">{{ row.notification_message }}</p>
+                <div class="recommended-action"><i class="bi bi-arrow-right-circle-fill"></i><span><strong>Recommended action:</strong> {{ row.recommended_action }}</span></div>
+            </div>
+        </article>
+        {% else %}<div class="insight-card">No active notifications.</div>{% endfor %}
+    </div>
+{% endblock %}

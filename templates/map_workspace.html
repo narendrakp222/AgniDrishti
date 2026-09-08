@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Hotspot Map | AgniDrishti{% endblock %}
+{% block page_kicker %}Geospatial Operations Center{% endblock %}
+
+{% block content %}
+<div class="page-heading map-heading">
+    <div>
+        <h1>Hotspot Command Map</h1>
+        <p>Investigate thermal incidents, exposure, and escalation from one operational workspace.</p>
+    </div>
+    <div class="map-health"><span class="status-dot"></span> {{ incident_count }} hotspots tracked</div>
+</div>
+
+<div class="map-toolbar card">
+    <div class="map-toolbar-copy"><i class="bi bi-layers-fill"></i><span>All available hotspot layers are visible. Select a marker in the map for its source details.</span></div>
+    <button class="btn btn-light border" type="button" id="resetMap"><i class="bi bi-arrow-counterclockwise"></i> Reset view</button>
+</div>
+
+<div class="map-workspace">
+    <section class="map-frame card">
+        <iframe src="{{ url_for('map_document') }}" title="AgniDrishti hotspot map"></iframe>
+        <div class="map-legend"><strong>Risk level</strong><span><i class="legend-dot critical"></i> Critical</span><span><i class="legend-dot high"></i> High</span><span><i class="legend-dot medium"></i> Medium</span><span><i class="legend-dot low"></i> Low</span></div>
+    </section>
+
+    <aside class="incident-inspector card">
+        <div class="inspector-header"><div><div class="stat-label">Selected hotspot</div><h2 class="h5 mb-0">Incident Inspector</h2></div><span class="badge bg-danger">{{ incident.escalation_level }}</span></div>
+        <div class="inspector-event"><i class="bi bi-fire"></i><div><strong>{{ incident.event_type or 'Unknown Thermal Source' }}</strong><small>{{ incident.latitude }}, {{ incident.longitude }}</small></div></div>
+        <div class="inspector-grid"><div><small>GeoRisk</small><strong>{{ incident.georisk_score }}</strong></div><div><small>Probability</small><strong>{{ incident.escalation_probability }}%</strong></div><div><small>Weather</small><strong>{{ incident.weather_label }}</strong></div><div><small>Population</small><strong>{{ "{:,}".format(incident.population_exposed|int) }}</strong></div></div>
+        <div class="inspector-alert"><i class="bi bi-exclamation-triangle-fill"></i><span>{{ incident.anomaly_label }} anomaly signal detected</span></div>
+        <div class="inspector-actions"><a href="/explainability" class="btn btn-primary"><i class="bi bi-lightbulb"></i> Explain prediction</a><a href="/report" class="btn btn-outline-secondary"><i class="bi bi-file-earmark-pdf"></i> Open full report</a><a href="/decision-support" class="btn btn-outline-danger"><i class="bi bi-signpost-split"></i> Decision support</a></div>
+        <div class="inspector-footer"><span><i class="bi bi-bell-fill"></i> {{ critical_count }} critical</span><span>{{ high_count }} high</span></div>
+    </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById("resetMap").addEventListener("click", function () {
+        const frame = document.querySelector(".map-frame iframe");
+        frame.src = frame.src;
+    });
+</script>
+{% endblock %}

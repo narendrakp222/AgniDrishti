@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics | AgniDrishti{% endblock %}
+{% block page_kicker %}AI Analytics Dashboard{% endblock %}
+
+{% block content %}
+<div class="page-heading"><h1>AI Analytics Dashboard</h1><p>Decision-grade visibility into risk distribution, event behavior, and escalation trends.</p></div>
+<div class="row g-4">
+    <div class="col-lg-6"><div class="card risk-card chart-card h-100"><div class="card-body"><div class="chart-heading"><div><div class="stat-label">Risk profile</div><h2 class="h5 mb-0">Risk Distribution</h2></div><i class="bi bi-pie-chart-fill text-primary"></i></div><div class="chart-wrap"><canvas id="riskDistributionChart"></canvas></div></div></div></div>
+    <div class="col-lg-6"><div class="card risk-card chart-card h-100"><div class="card-body"><div class="chart-heading"><div><div class="stat-label">Thermal sources</div><h2 class="h5 mb-0">Event Classification</h2></div><i class="bi bi-diagram-3-fill text-primary"></i></div><div class="chart-wrap"><canvas id="eventClassificationChart"></canvas></div></div></div></div>
+    <div class="col-lg-6"><div class="card risk-card chart-card h-100"><div class="card-body"><div class="chart-heading"><div><div class="stat-label">Seven-day signal</div><h2 class="h5 mb-0">GeoRisk Trend</h2></div><i class="bi bi-graph-up-arrow text-primary"></i></div><div class="chart-wrap"><canvas id="georiskTrendChart"></canvas></div></div></div></div>
+    <div class="col-lg-6"><div class="card risk-card chart-card h-100"><div class="card-body"><div class="chart-heading"><div><div class="stat-label">Escalation load</div><h2 class="h5 mb-0">Escalation Trend</h2></div><i class="bi bi-exclamation-triangle-fill text-danger"></i></div><div class="chart-wrap"><canvas id="escalationTrendChart"></canvas></div></div></div></div>
+    <div class="col-12"><div class="card insight-card ai-insights-card"><div class="card-body"><div class="chart-heading"><div><div class="stat-label">Decision support</div><h2 class="h5 mb-0">AI Insights</h2></div><span class="insight-status"><span class="status-dot"></span> Live analysis</span></div><div class="row g-3 mt-1">{% for insight in insights %}<div class="col-md-6 col-xl-3"><div class="insight-item"><i class="bi bi-shield-check"></i><span>{{ insight }}</span></div></div>{% endfor %}</div></div></div></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const colors = { blue: "#2563eb", red: "#ef4444", orange: "#f97316", yellow: "#eab308", green: "#22c55e", grid: "#e2e8f0", text: "#64748b" };
+const baseOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom", labels: { usePointStyle: true, color: colors.text, padding: 16 } } } };
+new Chart(document.getElementById("riskDistributionChart"), { type: "pie", data: { labels: {{ risk_labels | tojson }}, datasets: [{ data: {{ risk_values | tojson }}, backgroundColor: [colors.green, colors.yellow, colors.orange, colors.red], borderWidth: 0 }] }, options: baseOptions });
+new Chart(document.getElementById("eventClassificationChart"), { type: "doughnut", data: { labels: {{ event_labels | tojson }}, datasets: [{ data: {{ event_values | tojson }}, backgroundColor: [colors.blue, colors.orange, colors.red, colors.yellow, colors.green], borderWidth: 0 }] }, options: baseOptions });
+new Chart(document.getElementById("georiskTrendChart"), { type: "line", data: { labels: {{ trend_labels | tojson }}, datasets: [{ label: "Average GeoRisk", data: {{ trend_values | tojson }}, borderColor: colors.blue, backgroundColor: "rgba(37,99,235,.12)", fill: true, tension: .35, pointRadius: 3 }] }, options: { ...baseOptions, scales: { y: { beginAtZero: false, grid: { color: colors.grid } }, x: { grid: { display: false } } } } });
+new Chart(document.getElementById("escalationTrendChart"), { type: "line", data: { labels: {{ trend_labels | tojson }}, datasets: [{ label: "Critical", data: {{ escalation_trend_values.critical | tojson }}, borderColor: colors.red, tension: .35 }, { label: "High", data: {{ escalation_trend_values.high | tojson }}, borderColor: colors.orange, tension: .35 }, { label: "Medium", data: {{ escalation_trend_values.medium | tojson }}, borderColor: colors.yellow, tension: .35 }] }, options: { ...baseOptions, scales: { y: { beginAtZero: true, grid: { color: colors.grid } }, x: { grid: { display: false } } } } });
+</script>
+{% endblock %}

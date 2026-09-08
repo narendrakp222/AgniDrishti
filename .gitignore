@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Runtime and editor files
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db
+
+# Generated caches
+cache/
+
+# Generated datasets
+# Keep source/sample data intentionally; regenerate derived outputs.
+data/processed/*
+!data/processed/.gitkeep
+
+# Large raw downloads
+# Keep small GeoJSON fixtures, but do not commit multi-hundred-MB downloads.
+data/raw/*.json
+
+# Generated map output is reproducible.
+templates/hotspot_map.html

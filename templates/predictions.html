@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Predictions | AgniDrishti{% endblock %}
+{% block page_kicker %}AI Escalation Prediction Center{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>AI Prediction Center</h1>
+    <p>Prioritized forecasts for incidents most likely to escalate within the next 48 hours.</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fee2e2;color:#ef4444"><i class="bi bi-graph-up-arrow"></i></div><div class="stat-label">Highest Prediction</div><div class="stat-value text-danger">{{ highest_prediction }}%</div><div class="text-muted small">Maximum escalation likelihood</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#dbeafe;color:#2563eb"><i class="bi bi-percent"></i></div><div class="stat-label">Average Prediction</div><div class="stat-value">{{ average_prediction }}%</div><div class="text-muted small">Across active incidents</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#ffedd5;color:#f97316"><i class="bi bi-exclamation-octagon-fill"></i></div><div class="stat-label">Critical Incidents</div><div class="stat-value text-danger">{{ critical_incidents }}</div><div class="text-muted small">Current critical level</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fef9c3;color:#a16207"><i class="bi bi-shield-exclamation"></i></div><div class="stat-label">High Risk Incidents</div><div class="stat-value" style="color:#f97316">{{ high_risk_incidents }}</div><div class="text-muted small">Requires field attention</div></div></div>
+</div>
+
+<div class="card insight-card mb-4"><div class="card-body"><div class="chart-heading"><div><div class="stat-label">Model Summary</div><h2 class="h5 mb-0">AI Prediction Summary</h2></div><i class="bi bi-stars text-primary fs-4"></i></div><div class="row g-3 mt-2"><div class="col-md-3"><small class="text-muted d-block">Above 90%</small><strong class="fs-4">{{ above_90 }}</strong><span class="d-block small text-secondary">high-likelihood incidents</span></div><div class="col-md-3"><small class="text-muted d-block">Highest GeoRisk</small><strong class="fs-4">{{ highest_georisk }}</strong><span class="d-block small text-secondary">maximum composite score</span></div><div class="col-md-3"><small class="text-muted d-block">Risk Trend</small><strong class="fs-4">{{ risk_trend }}</strong><span class="d-block small text-secondary">seven-day GeoRisk direction</span></div><div class="col-md-3"><small class="text-muted d-block">Recommended Action</small><strong class="d-block mt-2">{{ recommended_action }}</strong></div></div></div></div>
+
+<div class="card risk-card chart-card mb-4"><div class="card-body"><div class="chart-heading"><div><div class="stat-label">Forecast Profile</div><h2 class="h5 mb-0">Prediction Distribution</h2></div><i class="bi bi-pie-chart-fill text-primary"></i></div><div class="chart-wrap prediction-chart-wrap"><canvas id="predictionDistributionChart"></canvas></div></div></div>
+
+<div class="section-title">Predicted Escalations</div>
+<div class="row g-3">
+    {% for row in predictions %}
+    <div class="col-md-6 col-xl-4">
+        <article class="card prediction-card h-100 {{ row.card_class }}">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start gap-2">
+                    <div>
+                        <div class="stat-label">Incident Location</div>
+                        <div class="fw-semibold mt-1"><i class="bi bi-geo-alt-fill text-primary"></i> {{ row.latitude }}, {{ row.longitude }}</div>
+                    </div>
+                    <span class="badge bg-{{ row.badge_class }}">{{ row.escalation_level }}</span>
+                </div>
+                <div class="prediction-metrics">
+                    <div><small>GeoRisk Score</small><strong>{{ row.georisk_score }}</strong></div>
+                    <div><small>Probability</small><strong>{{ row.escalation_probability }}%</strong></div>
+                </div>
+                <div class="progress prediction-progress" role="progressbar" aria-valuenow="{{ row.escalation_probability }}" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar bg-{{ row.progress_class }}" data-progress="{{ row.escalation_probability }}"></div>
+                </div>
+                <div class="recommended-action mt-3"><i class="bi bi-arrow-right-circle-fill"></i><span>{{ row.recommended_action }}</span></div>
+            </div>
+        </article>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script id="predictionDistributionLabels" type="application/json">{{ distribution_labels | tojson }}</script>
+<script id="predictionDistributionValues" type="application/json">{{ distribution_values | tojson }}</script>
+<script>
+const predictionLabels = JSON.parse(document.getElementById("predictionDistributionLabels").textContent);
+const predictionValues = JSON.parse(document.getElementById("predictionDistributionValues").textContent);
+document.querySelectorAll("[data-progress]").forEach(function (bar) {
+    bar.style.width = `${bar.dataset.progress}%`;
+});
+new Chart(document.getElementById("predictionDistributionChart"), {
+    type: "doughnut",
+    data: {
+        labels: predictionLabels,
+        datasets: [{
+            data: predictionValues,
+            backgroundColor: ["#ef4444", "#f97316", "#eab308", "#22c55e"],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "64%",
+        plugins: { legend: { position: "bottom", labels: { usePointStyle: true, padding: 18 } } }
+    }
+});
+</script>
+{% endblock %}

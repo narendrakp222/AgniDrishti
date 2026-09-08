@@ -1,0 +1,14 @@
+pip install pandas
+pip install flask
+pip install folium
+pip install geopandas
+pip install shapely
+pip install rasterio
+pip install scikit-learn
+pip install xgboost
+pip install shap
+pip install psycopg2-binary
+pip install sqlalchemy
+pip install geopy
+pip install osmnx geopandas shapely geopy
+pip install matplotlib

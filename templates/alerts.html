@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Alert Center | AgniDrishti{% endblock %}
+{% block page_kicker %}Incident Escalation Queue{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>Alert Center</h1>
+    <p>Review incidents by severity and move the highest-priority signals into response coordination.</p>
+</div>
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fee2e2;color:#ef4444"><i class="bi bi-exclamation-octagon-fill"></i></div><div class="stat-label">Critical</div><div class="stat-value text-danger">{{ critical_count }}</div><div class="text-muted small">Immediate action required</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#ffedd5;color:#f97316"><i class="bi bi-exclamation-triangle-fill"></i></div><div class="stat-label">High</div><div class="stat-value" style="color:#f97316">{{ high_count }}</div><div class="text-muted small">Field review recommended</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fef9c3;color:#a16207"><i class="bi bi-eye-fill"></i></div><div class="stat-label">Medium</div><div class="stat-value" style="color:#a16207">{{ medium_count }}</div><div class="text-muted small">Active monitoring required</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card insight-card h-100"><div class="stat-label">Response route</div><div class="stat-value fs-5">Decision Support</div><a class="btn btn-sm btn-primary mt-3" href="/decision-support">Open response board <i class="bi bi-arrow-right"></i></a></div></div>
+</div>
+{% macro incident_table(rows, include_anomaly=false) %}
+<div class="dashboard-table"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Location</th><th>Event</th><th>GeoRisk</th>{% if include_anomaly %}<th>Anomaly</th>{% endif %}<th>Escalation</th><th>Next action</th></tr></thead><tbody>{% for row in rows %}<tr><td class="fw-semibold">{{ row.latitude }}, {{ row.longitude }}</td><td>{{ row.event_type }}</td><td>{{ row.georisk_score }}</td>{% if include_anomaly %}<td>{{ row.anomaly_status }}</td>{% endif %}<td><span class="badge {% if row.escalation_level == 'CRITICAL' %}bg-danger{% elif row.escalation_level == 'HIGH' %}bg-warning text-dark{% else %}bg-success{% endif %}">{{ row.escalation_level }}</span></td><td>{% if row.escalation_level == 'CRITICAL' %}<span class="text-danger fw-semibold">Dispatch now</span>{% elif row.escalation_level == 'HIGH' %}<span class="text-warning-emphasis fw-semibold">Field review</span>{% else %}<span class="text-muted">Monitor</span>{% endif %}</td></tr>{% else %}<tr><td colspan="6" class="text-center text-muted py-4">No incidents in this severity band.</td></tr>{% endfor %}</tbody></table></div></div>
+{% endmacro %}
+<div class="section-title">Critical Escalations</div>{{ incident_table(critical_alerts, true) }}
+<div class="section-title">High Escalations</div>{{ incident_table(high_alerts) }}
+<div class="section-title">Medium Escalations</div>{{ incident_table(medium_alerts) }}
+{% endblock %}
+ %}
+
+</table>
+
+<hr>
+
+<a href="/">
+    <button>Back to Dashboard</button>
+</a>
+
+</body>
+
+</html>

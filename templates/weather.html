@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Weather Risk | AgniDrishti{% endblock %}
+{% block page_kicker %}Atmospheric Risk Monitoring{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>Weather Risk Dashboard</h1>
+    <p>Monitor atmospheric conditions that can accelerate hotspot severity and response demand.</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fee2e2;color:#ef4444"><i class="bi bi-thermometer-sun"></i></div><div class="stat-label">Highest Temperature</div><div class="stat-value">{{ highest_temperature }}°C</div><div class="text-muted small">Thermal stress indicator</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#dbeafe;color:#2563eb"><i class="bi bi-wind"></i></div><div class="stat-label">Highest Wind Speed</div><div class="stat-value">{{ highest_wind_speed }}<span class="fs-6"> km/h</span></div><div class="text-muted small">Fire spread acceleration</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#e0f2fe;color:#0284c7"><i class="bi bi-cloud-rain-fill"></i></div><div class="stat-label">Highest Rainfall</div><div class="stat-value">{{ highest_rainfall }}<span class="fs-6"> mm</span></div><div class="text-muted small">Suppression factor</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#ffedd5;color:#f97316"><i class="bi bi-exclamation-triangle-fill"></i></div><div class="stat-label">Highest Weather Risk</div><div class="stat-value">{{ highest_weather_risk }}</div><div class="text-muted small">Composite weather score</div></div></div>
+</div>
+
+<div class="card risk-card chart-card mb-4">
+    <div class="card-body">
+        <div class="chart-heading"><div><div class="stat-label">Condition Severity</div><h2 class="h5 mb-0">Weather Risk Distribution</h2></div><i class="bi bi-cloud-lightning-rain-fill text-primary"></i></div>
+        <div class="chart-wrap weather-chart-wrap"><canvas id="weatherRiskChart"></canvas></div>
+    </div>
+</div>
+
+<div class="section-title">Weather Threat Table</div>
+<div class="dashboard-table">
+    <div class="table-responsive"><table class="table table-hover align-middle mb-0">
+        <thead><tr><th>Location</th><th><i class="bi bi-thermometer-half"></i> Temperature</th><th><i class="bi bi-droplet-half"></i> Humidity</th><th><i class="bi bi-wind"></i> Wind</th><th><i class="bi bi-cloud-rain"></i> Rainfall</th><th>Weather Risk</th><th>Level</th></tr></thead>
+        <tbody>{% for row in weather_data %}<tr><td class="fw-semibold">{{ row.latitude }}, {{ row.longitude }}</td><td>{{ row.temperature }}°C</td><td>{{ row.humidity }}%</td><td>{{ row.wind_speed }} km/h</td><td>{{ row.rainfall }} mm</td><td class="fw-semibold">{{ row.weather_risk_score }}</td><td><span class="badge {% if row.weather_risk_level == 'HIGH' %}bg-danger{% elif row.weather_risk_level == 'MEDIUM' %}bg-warning text-dark{% else %}bg-success{% endif %}">{{ row.weather_risk_level }}</span></td></tr>{% endfor %}</tbody>
+    </table></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById("weatherRiskChart"), {
+    type: "bar",
+    data: { labels: {{ risk_labels | tojson }}, datasets: [{ label: "Locations", data: {{ risk_values | tojson }}, backgroundColor: ["#22c55e", "#eab308", "#ef4444"], borderRadius: 7 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: "#e2e8f0" } }, x: { grid: { display: false } } } }
+});
+</script>
+{% endblock %}

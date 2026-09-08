@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Population Exposure | AgniDrishti{% endblock %}
+{% block page_kicker %}Population Impact Intelligence{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>Population Exposure Dashboard</h1>
+    <p>Prioritize communities and locations with the greatest modeled exposure.</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#dbeafe;color:#2563eb"><i class="bi bi-people-fill"></i></div><div class="stat-label">Total Population At Risk</div><div class="stat-value">{{ "{:,}".format(total_population) }}</div><div class="text-muted small">Across active hotspot records</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#ffedd5;color:#f97316"><i class="bi bi-geo-alt-fill"></i></div><div class="stat-label">High Exposure Zones</div><div class="stat-value text-warning">{{ high_exposure_zones }}</div><div class="text-muted small">More than 30,000 exposed</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fee2e2;color:#ef4444"><i class="bi bi-exclamation-octagon-fill"></i></div><div class="stat-label">Critical Exposure Zones</div><div class="stat-value text-danger">{{ critical_exposure_zones }}</div><div class="text-muted small">More than 40,000 exposed</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fef9c3;color:#a16207"><i class="bi bi-bar-chart-fill"></i></div><div class="stat-label">Average Exposure</div><div class="stat-value">{{ "{:,}".format(average_exposure) }}</div><div class="text-muted small">People per hotspot</div></div></div>
+</div>
+
+<div class="card risk-card chart-card mb-4">
+    <div class="card-body">
+        <div class="chart-heading"><div><div class="stat-label">GIS Exposure Ranking</div><h2 class="h5 mb-0">Population Exposure by Location</h2></div><i class="bi bi-bar-chart-fill text-primary"></i></div>
+        <div class="chart-wrap population-chart-wrap"><canvas id="populationExposureChart"></canvas></div>
+    </div>
+</div>
+
+<div class="section-title">Top Affected Locations</div>
+<div class="dashboard-table">
+    <div class="table-responsive"><table class="table table-hover align-middle mb-0">
+        <thead><tr><th>Location</th><th>Population Exposed</th><th>Exposure Level</th><th>GeoRisk</th><th>Escalation</th></tr></thead>
+        <tbody>{% for row in population_data %}<tr><td class="fw-semibold">{{ row.latitude }}, {{ row.longitude }}</td><td>{{ "{:,}".format(row.population_exposed) }}</td><td><span class="badge {% if row.exposure_level == 'HIGH' %}bg-danger{% elif row.exposure_level == 'MEDIUM' %}bg-warning text-dark{% else %}bg-success{% endif %}">{{ row.exposure_level }}</span></td><td>{{ row.georisk_score }}</td><td>{{ row.escalation_level }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById("populationExposureChart"), {
+    type: "bar",
+    data: { labels: {{ chart_labels | tojson }}, datasets: [{ label: "Population Exposed", data: {{ chart_values | tojson }}, backgroundColor: "#2563eb", borderRadius: 6 }] },
+    options: { responsive: true, maintainAspectRatio: false, indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, grid: { color: "#e2e8f0" } }, y: { grid: { display: false } } } }
+});
+</script>
+{% endblock %}

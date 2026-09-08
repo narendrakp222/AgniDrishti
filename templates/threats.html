@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Infrastructure Threats | AgniDrishti{% endblock %}
+{% block page_kicker %}Critical Infrastructure Monitoring{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>Infrastructure Threat Dashboard</h1>
+    <p>Translate distance signals into clear protection priorities for emergency teams.</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#dbeafe;color:#2563eb"><i class="bi bi-building-fill-check"></i></div><div class="stat-label">Monitored Incidents</div><div class="stat-value">{{ total_incidents }}</div><div class="text-muted small">Infrastructure-linked hotspots</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fee2e2;color:#ef4444"><i class="bi bi-exclamation-octagon-fill"></i></div><div class="stat-label">Critical Threats</div><div class="stat-value text-danger">{{ critical_threats }}</div><div class="text-muted small">Immediate protection review</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#ffedd5;color:#f97316"><i class="bi bi-shield-exclamation"></i></div><div class="stat-label">High Threats</div><div class="stat-value" style="color:#f97316">{{ high_threats }}</div><div class="text-muted small">Field assessment recommended</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fef9c3;color:#a16207"><i class="bi bi-radar"></i></div><div class="stat-label">Medium Threats</div><div class="stat-value" style="color:#a16207">{{ medium_threats }}</div><div class="text-muted small">Continue monitoring</div></div></div>
+</div>
+
+<div class="card insight-card mb-4"><div class="card-body d-flex align-items-start gap-3"><i class="bi bi-info-circle-fill text-primary fs-4"></i><div><h2 class="h5">Infrastructure protection brief</h2><p class="mb-0 text-secondary">Threat levels are derived from proximity bands: under 20 km is critical, under 50 km is high, under 100 km is medium, and beyond 100 km is low.</p></div></div></div>
+
+<div class="section-title">Infrastructure Threat Matrix</div>
+<div class="dashboard-table">
+    <div class="table-responsive"><table class="table table-hover align-middle mb-0">
+        <thead><tr><th>GeoRisk</th><th>Overall Threat</th><th>Hospital</th><th>Industry</th><th>Factory</th><th>Power Plant</th><th>Action</th></tr></thead>
+        <tbody>
+        {% for row in threat_data %}
+        <tr>
+            <td class="fw-semibold">{{ row.georisk_score }}</td>
+            <td><span class="badge {% if row.overall_threat == 'CRITICAL' %}bg-danger{% elif row.overall_threat == 'HIGH' %}bg-warning text-dark{% elif row.overall_threat == 'MEDIUM' %}bg-warning text-dark{% else %}bg-success{% endif %}">{{ row.overall_threat }}</span></td>
+            <td><span class="threat-pill {{ row.hospital_threat|lower }}">{{ row.hospital_threat }}</span></td>
+            <td><span class="threat-pill {{ row.industry_threat|lower }}">{{ row.industry_threat }}</span></td>
+            <td><span class="threat-pill {{ row.factory_threat|lower }}">{{ row.factory_threat }}</span></td>
+            <td><span class="threat-pill {{ row.powerplant_threat|lower }}">{{ row.powerplant_threat }}</span></td>
+            <td>{% if row.overall_threat == 'CRITICAL' %}<span class="text-danger fw-semibold">Protect now</span>{% elif row.overall_threat == 'HIGH' %}<span class="text-warning-emphasis fw-semibold">Field review</span>{% else %}<span class="text-muted">Monitor</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table></div>
+</div>
+{% endblock %}

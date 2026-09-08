@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Decision Support | AgniDrishti{% endblock %}
+{% block page_kicker %}Emergency Decision Support{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>Decision Support Center</h1>
+    <p>Prioritized actions and resources for the next operational response cycle.</p>
+</div>
+
+{% if critical_alert %}<div class="alert alert-danger d-flex align-items-center gap-2 shadow-sm"><i class="bi bi-exclamation-octagon-fill"></i><strong>Critical Escalation Detected</strong><span class="ms-auto">Immediate coordination required</span></div>{% endif %}
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fee2e2;color:#ef4444"><i class="bi bi-percent"></i></div><div class="stat-label">Average Escalation Probability</div><div class="stat-value">{{ escalation_probability }}%</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#ffedd5;color:#f97316"><i class="bi bi-bell-fill"></i></div><div class="stat-label">Active Alerts</div><div class="stat-value">{{ notification_status }}</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#dbeafe;color:#2563eb"><i class="bi bi-signpost-split-fill"></i></div><div class="stat-label">Recommended Action</div><div class="stat-value decision-value">{{ recommended_action }}</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fef9c3;color:#a16207"><i class="bi bi-building-fill-exclamation"></i></div><div class="stat-label">Infrastructure At Risk</div><div class="stat-value">{{ infrastructure_count }}</div></div></div>
+</div>
+
+<div class="section-title">Top Critical Incidents</div>
+<div class="row g-3 mb-4">
+    {% for row in critical_incidents %}
+    <div class="col-md-6 col-xl-4"><div class="card risk-card h-100"><div class="d-flex justify-content-between align-items-start"><div><div class="stat-label">Incident {{ loop.index }}</div><h2 class="h6 mt-2 mb-1">{{ row.latitude }}, {{ row.longitude }}</h2></div><span class="badge bg-danger">{{ row.escalation_level }}</span></div><div class="row mt-3 g-2"><div class="col-6"><small class="text-muted d-block">GeoRisk</small><strong>{{ row.georisk_score }}</strong></div><div class="col-6"><small class="text-muted d-block">Probability</small><strong>{{ row.escalation_probability }}%</strong></div></div><div class="mt-3"><span class="badge text-bg-dark">{{ row.priority_action }}</span></div></div></div>
+    {% else %}<div class="col-12"><div class="insight-card">No critical incidents are currently registered.</div></div>{% endfor %}
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-4"><div class="card risk-card h-100"><div class="chart-heading"><h2 class="h5 mb-0">Resource Allocation</h2><i class="bi bi-box-seam text-primary"></i></div><div class="resource-list mt-4"><div><span>Emergency Teams</span><strong>{{ emergency_teams }}</strong></div><div><span>Medical Units</span><strong>{{ medical_units }}</strong></div><div><span>Monitoring Drones</span><strong>{{ monitoring_drones }}</strong></div><div><span>Police Support</span><strong>{{ police_support }}</strong></div></div></div></div>
+    <div class="col-lg-4"><div class="card risk-card h-100"><div class="chart-heading"><h2 class="h5 mb-0">Recommended Actions</h2><i class="bi bi-list-check text-primary"></i></div><ol class="action-list mt-3">{% for action in recommended_actions %}<li>{{ action }}</li>{% endfor %}</ol></div></div>
+    <div class="col-lg-4"><div class="card risk-card h-100"><div class="chart-heading"><h2 class="h5 mb-0">Response Checklist</h2><i class="bi bi-clipboard2-check text-primary"></i></div><div class="check-list mt-3">{% for item in emergency_checklist %}<label><input type="checkbox"> <span>{{ item }}</span></label>{% endfor %}</div></div></div>
+</div>
+{% endblock %}

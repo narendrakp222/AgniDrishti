@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "powerplants",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 1247721906, "barrier": null, "description": null, "plant:method": "thermal", "plant:output:electricity": "yes", "plant:source": "solar", "plant:type": null, "power": "plant", "name": "Honeywell Experimental Solar Farm" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 78.3453548, 17.4190671 ], [ 78.3455581, 17.4190609 ], [ 78.3455598, 17.4189248 ], [ 78.3457581, 17.4189217 ], [ 78.345763, 17.418637 ], [ 78.3455549, 17.4186339 ], [ 78.3455598, 17.4187793 ], [ 78.3453499, 17.4187762 ], [ 78.3453548, 17.4190671 ] ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 1389975004, "barrier": "wall", "description": "39530", "plant:method": "photovoltaic", "plant:output:electricity": "yes", "plant:source": "solar", "plant:type": "solar_photovoltaic_panel", "power": "plant", "name": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 78.2813497, 17.5233255 ], [ 78.2814664, 17.5237014 ], [ 78.281583, 17.5243089 ], [ 78.2825473, 17.5242347 ], [ 78.2828866, 17.5241503 ], [ 78.2832152, 17.5240634 ], [ 78.2829148, 17.5232807 ], [ 78.2830167, 17.523163 ], [ 78.2847038, 17.5232091 ], [ 78.2848138, 17.5223318 ], [ 78.2848138, 17.5219916 ], [ 78.2844919, 17.521943 ], [ 78.2843766, 17.5221374 ], [ 78.2828155, 17.5221195 ], [ 78.2826546, 17.5223522 ], [ 78.2820806, 17.5223446 ], [ 78.2809755, 17.5223932 ], [ 78.2813497, 17.5233255 ] ] ] } }
+]
+}

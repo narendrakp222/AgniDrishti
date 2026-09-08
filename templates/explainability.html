@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Explainable AI | AgniDrishti{% endblock %}
+{% block page_kicker %}Explainable Risk Intelligence{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>Explainable AI</h1>
+    <p>Understand which signals are driving each escalation prediction.</p>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-7"><div class="card insight-card h-100"><div class="chart-heading"><div><div class="stat-label">Model Reasoning</div><h2 class="h5 mb-0">AI Explanation</h2></div><i class="bi bi-lightbulb-fill text-primary fs-4"></i></div><p class="mt-4 mb-0 text-secondary">{{ ai_explanation }}</p><div class="mt-3"><span class="badge text-bg-primary">Prototype rule-based explanation</span></div></div></div>
+    <div class="col-lg-5"><div class="card risk-card h-100"><div class="chart-heading"><div><div class="stat-label">Feature Importance</div><h2 class="h5 mb-0">Prediction Drivers</h2></div><i class="bi bi-bar-chart-steps text-primary"></i></div><div class="importance-list mt-4">{% for feature in feature_importance %}<div class="importance-row"><div class="d-flex justify-content-between small mb-1"><span>{{ feature.name }}</span><strong>{{ feature.value }}%</strong></div><div class="progress" role="progressbar" aria-label="{{ feature.name }} importance" aria-valuenow="{{ feature.value }}" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar bg-{{ feature.color }}" style="width: {{ feature.value }}%"></div></div></div>{% endfor %}</div></div></div>
+</div>
+
+<div class="section-title">Incident Prediction Explanations</div>
+<div class="row g-3">
+    {% for row in explanations %}
+    <div class="col-md-6 col-xl-4"><div class="card risk-card h-100"><div class="d-flex justify-content-between gap-2"><div><div class="stat-label">{{ row.event_type }}</div><div class="small text-muted mt-1">{{ row.latitude }}, {{ row.longitude }}</div></div><span class="badge {% if row.escalation == 'CRITICAL' %}bg-danger{% elif row.escalation == 'HIGH' %}bg-warning text-dark{% else %}bg-success{% endif %}">{{ row.escalation }}</span></div><div class="explanation-metrics mt-4"><div><small>GeoRisk</small><strong>{{ row.georisk }}</strong></div><div><small>Probability</small><strong>{{ row.probability }}%</strong></div></div><div class="factor-line mt-3"><i class="bi bi-info-circle"></i> {{ row.factors }}</div></div></div>
+    {% endfor %}
+</div>
+{% endblock %}

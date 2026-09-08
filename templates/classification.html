@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Classification | AgniDrishti{% endblock %}
+{% block page_kicker %}Thermal Source Classification{% endblock %}
+{% block content %}
+<div class="page-heading"><h1>Thermal Source Classification</h1><p>Classify satellite thermal signals using brightness, FRP, and nearby industrial context.</p></div>
+<div class="card insight-card mb-4"><div class="card-body d-flex align-items-start gap-3"><i class="bi bi-diagram-3-fill text-primary fs-4"></i><div><h2 class="h5">Classification note</h2><p class="mb-0 text-secondary">This prototype applies transparent rule-based classification. Use the Explainable AI view to inspect the risk factors that support an incident decision.</p></div></div></div>
+<div class="dashboard-table"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Thermal source</th><th>GeoRisk</th><th>Brightness</th><th>FRP</th><th>Location</th><th>Investigate</th></tr></thead><tbody>{% for row in events %}<tr><td class="fw-semibold">{{ row.event_type }}</td><td>{{ row.georisk_score }}</td><td>{{ row.brightness }}</td><td>{{ row.frp }}</td><td>{{ row.latitude }}, {{ row.longitude }}</td><td><a href="/mapper" class="btn btn-sm btn-outline-primary">Open map</a></td></tr>{% else %}<tr><td colspan="6" class="text-center text-muted py-4">No classification records are available.</td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Command Center | AgniDrishti{% endblock %}
+{% block page_kicker %}National Thermal Risk Monitoring{% endblock %}
+
+{% block content %}
+<div class="page-heading dashboard-heading">
+    <div>
+        <h1>AgniDrishti Command Center</h1>
+        <p>Satellite-derived thermal intelligence for industrial fire detection, risk assessment, and coordinated response.</p>
+    </div>
+    <a href="/decision-support" class="btn btn-primary"><i class="bi bi-signpost-split"></i> Open Decision Support</a>
+</div>
+
+<section class="landing-map-shell" aria-label="Live thermal risk overview">
+    <div class="landing-map-panel">
+        <iframe src="{{ url_for('map_document') }}" title="AgniDrishti thermal risk map"></iframe>
+        <div class="map-title-overlay"><span class="status-dot"></span><div><strong>Thermal Risk Map</strong><small>NASA FIRMS hotspot overlay</small></div></div>
+        <div class="landing-legend"><strong>GeoRisk level</strong><span><i class="legend-dot critical"></i> Critical</span><span><i class="legend-dot high"></i> High</span><span><i class="legend-dot medium"></i> Moderate</span><span><i class="legend-dot low"></i> Low</span></div>
+        <a class="map-expand-link" href="/mapper"><i class="bi bi-arrows-fullscreen"></i><span>Open workspace</span></a>
+    </div>
+    <aside class="landing-alerts">
+        <div class="landing-alerts-heading"><div><div class="stat-label">Response queue</div><h2>Recent alerts</h2></div><a href="/alerts" class="icon-link" aria-label="Open alert center"><i class="bi bi-arrow-up-right"></i></a></div>
+        <div class="landing-alert-list">
+            {% for row in recent_alerts %}<a class="landing-alert-item" href="/decision-support"><span class="alert-dot {{ row.escalation_level|lower }}"></span><span class="alert-main"><strong>{{ row.event_type }}</strong><small>{{ row.latitude }}, {{ row.longitude }}</small></span><span class="alert-level {{ row.escalation_level|lower }}">{{ row.escalation_level }}</span></a>
+            {% else %}<div class="landing-empty"><i class="bi bi-shield-check"></i><span>No escalation alerts are active.</span></div>{% endfor %}
+        </div>
+        <a class="btn btn-outline-primary w-100 mt-auto" href="/notifications"><i class="bi bi-bell"></i> View notification queue</a>
+    </aside>
+</section>
+
+<div class="row g-3 my-4">
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#dbeafe;color:#2563eb"><i class="bi bi-fire"></i></div><div class="stat-label">Tracked hotspots</div><div class="stat-value">{{ total_hotspots }}</div><div class="text-muted small">Thermal signals in current dataset</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fee2e2;color:#ef4444"><i class="bi bi-exclamation-octagon-fill"></i></div><div class="stat-label">Critical alerts</div><div class="stat-value text-danger">{{ critical_alerts }}</div><div class="text-muted small">Require immediate review</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#fef9c3;color:#a16207"><i class="bi bi-speedometer2"></i></div><div class="stat-label">Average GeoRisk</div><div class="stat-value">{{ avg_georisk }}</div><div class="text-muted small">Composite incident score</div></div></div>
+    <div class="col-6 col-xl-3"><div class="card stat-card h-100"><div class="kpi-icon" style="background:#ffedd5;color:#f97316"><i class="bi bi-graph-up-arrow"></i></div><div class="stat-label">High probability</div><div class="stat-value" style="color:#f97316">{{ high_probability }}</div><div class="text-muted small">Above 80% escalation likelihood</div></div></div>
+</div>
+
+<div class="row g-3"><div class="col-lg-8"><div class="d-flex justify-content-between align-items-center section-title"><span>Priority Incident Board</span><a href="/decision-support" class="btn btn-sm btn-outline-primary">Response actions <i class="bi bi-arrow-right"></i></a></div><div class="dashboard-table"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Thermal source</th><th>GeoRisk</th><th>Escalation</th><th>Action</th></tr></thead><tbody>{% for row in top_escalations %}<tr><td class="fw-semibold">{{ row.event_type }}</td><td>{{ row.georisk_score }}</td><td><span class="badge {% if row.escalation_level == 'CRITICAL' %}bg-danger{% elif row.escalation_level == 'HIGH' %}bg-warning text-dark{% elif row.escalation_level == 'MEDIUM' %}bg-warning text-dark{% else %}bg-success{% endif %}">{{ row.escalation_level }}</span></td><td><a href="/explainability" class="btn btn-sm btn-light border">Explain</a></td></tr>{% else %}<tr><td colspan="4" class="text-center text-muted py-4">No active incidents are available.</td></tr>{% endfor %}</tbody></table></div></div></div><div class="col-lg-4"><div class="section-title">Classification Snapshot</div><div class="classification-stack">{% for row in event_summary %}<a class="classification-row" href="/classification"><span>{{ row.event_type }}</span><strong>{{ row.count }}</strong><i class="bi bi-chevron-right"></i></a>{% else %}<div class="text-muted small">No classification records are available.</div>{% endfor %}</div></div></div>
+{% endblock %}
