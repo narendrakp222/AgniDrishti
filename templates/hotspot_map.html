@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_61632a138018a513136677571ec85f9a {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+<div style="
+position: fixed;
+bottom: 50px;
+left: 50px;
+width: 220px;
+height: 130px;
+background-color: white;
+border:2px solid black;
+z-index:9999;
+padding:10px;
+">
+
+<h4>Escalation Levels</h4>
+
+🔴 Critical<br>
+🟠 High<br>
+🟡 Medium<br>
+🟢 Low
+
+</div>
+    
+            <div class="folium-map" id="map_61632a138018a513136677571ec85f9a" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_61632a138018a513136677571ec85f9a = L.map(
+                "map_61632a138018a513136677571ec85f9a",
+                {
+                    center: [22.0, 80.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_828fb6e493fcb594cc095e37aefe8eaa = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_828fb6e493fcb594cc095e37aefe8eaa.addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+            var circle_marker_db3ea1405c3d07a60f3ee9003d2833fe = L.circleMarker(
+                [29.22012, 88.95742],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+        var popup_a2d1542bce44a62d18787451232ba895 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_74cb2c5de893bfc2598ff048b2402496 = $(`<div id="html_74cb2c5de893bfc2598ff048b2402496" style="width: 100.0%; height: 100.0%;">     <b>Event:</b> Gas Flare<br>     <b>GeoRisk:</b> 105.84<br>     <b>Escalation:</b> CRITICAL<br>     <b>Anomaly:</b> Yes<br>     <b>Weather Risk:</b> LOW<br>     <b>Population Exposed:</b> 16795<br>     <hr>     <b>Nearest Hospital:</b> 1676.61 km<br>     <b>Nearest Industry:</b> 1675.28 km<br>     <b>Nearest Factory:</b> 1680.38 km<br>     <b>Nearest Power Plant:</b> 1691.85 km     </div>`)[0];
+                popup_a2d1542bce44a62d18787451232ba895.setContent(html_74cb2c5de893bfc2598ff048b2402496);
+            
+        
+
+        circle_marker_db3ea1405c3d07a60f3ee9003d2833fe.bindPopup(popup_a2d1542bce44a62d18787451232ba895)
+        ;
+
+        
+    
+    
+            var circle_marker_8a8cd0dab264f02b7440e05a87ac075f = L.circleMarker(
+                [29.26978, 88.90321],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+        var popup_e024275a4c40cf4d9734d377f6d5ec46 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e6506f1b44af29836a5d45225e618424 = $(`<div id="html_e6506f1b44af29836a5d45225e618424" style="width: 100.0%; height: 100.0%;">     <b>Event:</b> Agricultural Burning<br>     <b>GeoRisk:</b> 93.21<br>     <b>Escalation:</b> HIGH<br>     <b>Anomaly:</b> No<br>     <b>Weather Risk:</b> HIGH<br>     <b>Population Exposed:</b> 1860<br>     <hr>     <b>Nearest Hospital:</b> 1677.26 km<br>     <b>Nearest Industry:</b> 1675.95 km<br>     <b>Nearest Factory:</b> 1681.03 km<br>     <b>Nearest Power Plant:</b> 1692.38 km     </div>`)[0];
+                popup_e024275a4c40cf4d9734d377f6d5ec46.setContent(html_e6506f1b44af29836a5d45225e618424);
+            
+        
+
+        circle_marker_8a8cd0dab264f02b7440e05a87ac075f.bindPopup(popup_e024275a4c40cf4d9734d377f6d5ec46)
+        ;
+
+        
+    
+    
+            var circle_marker_f0cb52499ff7eed60c0685850700cc30 = L.circleMarker(
+                [8.76202, 78.18221],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+        var popup_64d728bbf622ec6d090c48a3f40c5276 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_619aba91c4be33c07bee85f597381daa = $(`<div id="html_619aba91c4be33c07bee85f597381daa" style="width: 100.0%; height: 100.0%;">     <b>Event:</b> Agricultural Burning<br>     <b>GeoRisk:</b> 64.58<br>     <b>Escalation:</b> MEDIUM<br>     <b>Anomaly:</b> No<br>     <b>Weather Risk:</b> LOW<br>     <b>Population Exposed:</b> 39158<br>     <hr>     <b>Nearest Hospital:</b> 946.44 km<br>     <b>Nearest Industry:</b> 944.31 km<br>     <b>Nearest Factory:</b> 955.06 km<br>     <b>Nearest Power Plant:</b> 957.9 km     </div>`)[0];
+                popup_64d728bbf622ec6d090c48a3f40c5276.setContent(html_619aba91c4be33c07bee85f597381daa);
+            
+        
+
+        circle_marker_f0cb52499ff7eed60c0685850700cc30.bindPopup(popup_64d728bbf622ec6d090c48a3f40c5276)
+        ;
+
+        
+    
+    
+            var circle_marker_2f6b739878ad85869ace0599e663e7f4 = L.circleMarker(
+                [8.75627, 78.18294],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+        var popup_46a244f04a73d4527012baef9472d6d0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_71904aaba378b7dd765d27f087b77ae6 = $(`<div id="html_71904aaba378b7dd765d27f087b77ae6" style="width: 100.0%; height: 100.0%;">     <b>Event:</b> Gas Flare<br>     <b>GeoRisk:</b> 73.68<br>     <b>Escalation:</b> MEDIUM<br>     <b>Anomaly:</b> No<br>     <b>Weather Risk:</b> MEDIUM<br>     <b>Population Exposed:</b> 45732<br>     <hr>     <b>Nearest Hospital:</b> 947.07 km<br>     <b>Nearest Industry:</b> 944.95 km<br>     <b>Nearest Factory:</b> 955.69 km<br>     <b>Nearest Power Plant:</b> 958.53 km     </div>`)[0];
+                popup_46a244f04a73d4527012baef9472d6d0.setContent(html_71904aaba378b7dd765d27f087b77ae6);
+            
+        
+
+        circle_marker_2f6b739878ad85869ace0599e663e7f4.bindPopup(popup_46a244f04a73d4527012baef9472d6d0)
+        ;
+
+        
+    
+    
+            var circle_marker_c2f12aaee649c35aac4ec36bdf173af2 = L.circleMarker(
+                [24.45387, 68.30828],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+        var popup_aef9dc5fcf7b7dbe3e531833f58c2c64 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a2dab951d862f496d1ba27a4aa0bde73 = $(`<div id="html_a2dab951d862f496d1ba27a4aa0bde73" style="width: 100.0%; height: 100.0%;">     <b>Event:</b> Agricultural Burning<br>     <b>GeoRisk:</b> 77.26<br>     <b>Escalation:</b> MEDIUM<br>     <b>Anomaly:</b> No<br>     <b>Weather Risk:</b> MEDIUM<br>     <b>Population Exposed:</b> 12284<br>     <hr>     <b>Nearest Hospital:</b> 1286.94 km<br>     <b>Nearest Industry:</b> 1285.68 km<br>     <b>Nearest Factory:</b> 1285.8 km<br>     <b>Nearest Power Plant:</b> 1289.29 km     </div>`)[0];
+                popup_aef9dc5fcf7b7dbe3e531833f58c2c64.setContent(html_a2dab951d862f496d1ba27a4aa0bde73);
+            
+        
+
+        circle_marker_c2f12aaee649c35aac4ec36bdf173af2.bindPopup(popup_aef9dc5fcf7b7dbe3e531833f58c2c64)
+        ;
+
+        
+    
+    
+            var circle_marker_44b54809f944770849cf71d08662c1c0 = L.circleMarker(
+                [24.45394, 68.31149],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+        var popup_370c355cb87723c1fbe2decce7f2bce9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_64bbca757a1b1847b156e2804dd8babd = $(`<div id="html_64bbca757a1b1847b156e2804dd8babd" style="width: 100.0%; height: 100.0%;">     <b>Event:</b> Agricultural Burning<br>     <b>GeoRisk:</b> 76.86<br>     <b>Escalation:</b> MEDIUM<br>     <b>Anomaly:</b> No<br>     <b>Weather Risk:</b> LOW<br>     <b>Population Exposed:</b> 7265<br>     <hr>     <b>Nearest Hospital:</b> 1286.67 km<br>     <b>Nearest Industry:</b> 1285.41 km<br>     <b>Nearest Factory:</b> 1285.54 km<br>     <b>Nearest Power Plant:</b> 1289.03 km     </div>`)[0];
+                popup_370c355cb87723c1fbe2decce7f2bce9.setContent(html_64bbca757a1b1847b156e2804dd8babd);
+            
+        
+
+        circle_marker_44b54809f944770849cf71d08662c1c0.bindPopup(popup_370c355cb87723c1fbe2decce7f2bce9)
+        ;
+
+        
+    
+    
+            var circle_marker_9213c0653aee3f3120c7e35245ed9d72 = L.circleMarker(
+                [22.92664, 70.10907],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+        var popup_d71c57d9b5950c3ea0af0c6706c3dc63 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6fe0cab1807a7114321628a2912072e3 = $(`<div id="html_6fe0cab1807a7114321628a2912072e3" style="width: 100.0%; height: 100.0%;">     <b>Event:</b> Agricultural Burning<br>     <b>GeoRisk:</b> 65.99<br>     <b>Escalation:</b> MEDIUM<br>     <b>Anomaly:</b> No<br>     <b>Weather Risk:</b> HIGH<br>     <b>Population Exposed:</b> 17850<br>     <hr>     <b>Nearest Hospital:</b> 1039.98 km<br>     <b>Nearest Industry:</b> 1038.72 km<br>     <b>Nearest Factory:</b> 1038.85 km<br>     <b>Nearest Power Plant:</b> 1042.36 km     </div>`)[0];
+                popup_d71c57d9b5950c3ea0af0c6706c3dc63.setContent(html_6fe0cab1807a7114321628a2912072e3);
+            
+        
+
+        circle_marker_9213c0653aee3f3120c7e35245ed9d72.bindPopup(popup_d71c57d9b5950c3ea0af0c6706c3dc63)
+        ;
+
+        
+    
+    
+            var circle_marker_cc6abf8b3ff218f706ca25756132dcd8 = L.circleMarker(
+                [29.9692, 72.58241],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+        var popup_567da2f210c0736b9f5b20297fa6c982 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c4105ce129c70e98a82fc1a95921793b = $(`<div id="html_c4105ce129c70e98a82fc1a95921793b" style="width: 100.0%; height: 100.0%;">     <b>Event:</b> Agricultural Burning<br>     <b>GeoRisk:</b> 82.62<br>     <b>Escalation:</b> MEDIUM<br>     <b>Anomaly:</b> No<br>     <b>Weather Risk:</b> LOW<br>     <b>Population Exposed:</b> 38194<br>     <hr>     <b>Nearest Hospital:</b> 1493.6 km<br>     <b>Nearest Industry:</b> 1492.62 km<br>     <b>Nearest Factory:</b> 1492.66 km<br>     <b>Nearest Power Plant:</b> 1495.29 km     </div>`)[0];
+                popup_567da2f210c0736b9f5b20297fa6c982.setContent(html_c4105ce129c70e98a82fc1a95921793b);
+            
+        
+
+        circle_marker_cc6abf8b3ff218f706ca25756132dcd8.bindPopup(popup_567da2f210c0736b9f5b20297fa6c982)
+        ;
+
+        
+    
+    
+            var circle_marker_46aa8c762a7f7565c6bf546bbee5279e = L.circleMarker(
+                [29.99058, 72.58743],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+        var popup_026ff7f7e23ef43349072c9382775919 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6a39b59967ea07f2e4957d0c0c45c44a = $(`<div id="html_6a39b59967ea07f2e4957d0c0c45c44a" style="width: 100.0%; height: 100.0%;">     <b>Event:</b> Unknown Thermal Source<br>     <b>GeoRisk:</b> 90.96<br>     <b>Escalation:</b> HIGH<br>     <b>Anomaly:</b> No<br>     <b>Weather Risk:</b> LOW<br>     <b>Population Exposed:</b> 22962<br>     <hr>     <b>Nearest Hospital:</b> 1495.57 km<br>     <b>Nearest Industry:</b> 1494.59 km<br>     <b>Nearest Factory:</b> 1494.63 km<br>     <b>Nearest Power Plant:</b> 1497.26 km     </div>`)[0];
+                popup_026ff7f7e23ef43349072c9382775919.setContent(html_6a39b59967ea07f2e4957d0c0c45c44a);
+            
+        
+
+        circle_marker_46aa8c762a7f7565c6bf546bbee5279e.bindPopup(popup_026ff7f7e23ef43349072c9382775919)
+        ;
+
+        
+    
+    
+            var circle_marker_c24958295ca27c7d3dd800ef55dfa0fd = L.circleMarker(
+                [30.27074, 73.32553],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+        var popup_14ef16983d2694167bde2037c2cff7fa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_01cb20dcbe18d9c943a7dbb49ebd5b57 = $(`<div id="html_01cb20dcbe18d9c943a7dbb49ebd5b57" style="width: 100.0%; height: 100.0%;">     <b>Event:</b> Forest Fire<br>     <b>GeoRisk:</b> 97.65<br>     <b>Escalation:</b> HIGH<br>     <b>Anomaly:</b> No<br>     <b>Weather Risk:</b> LOW<br>     <b>Population Exposed:</b> 48191<br>     <hr>     <b>Nearest Hospital:</b> 1497.31 km<br>     <b>Nearest Industry:</b> 1496.37 km<br>     <b>Nearest Factory:</b> 1496.41 km<br>     <b>Nearest Power Plant:</b> 1498.9 km     </div>`)[0];
+                popup_14ef16983d2694167bde2037c2cff7fa.setContent(html_01cb20dcbe18d9c943a7dbb49ebd5b57);
+            
+        
+
+        circle_marker_c24958295ca27c7d3dd800ef55dfa0fd.bindPopup(popup_14ef16983d2694167bde2037c2cff7fa)
+        ;
+
+        
+    
+    
+            var heat_map_f96ecc2bbee8469197ae4d0746b7e96b = L.heatLayer(
+                [[29.22012, 88.95742, 105.84], [29.26978, 88.90321, 93.21], [8.76202, 78.18221, 64.58], [8.75627, 78.18294, 73.68], [24.45387, 68.30828, 77.26], [24.45394, 68.31149, 76.86], [22.92664, 70.10907, 65.99], [29.9692, 72.58241, 82.62], [29.99058, 72.58743, 90.96], [30.27074, 73.32553, 97.65]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 18,
+  "radius": 25,
+  "blur": 15,
+}
+            );
+        
+    
+            heat_map_f96ecc2bbee8469197ae4d0746b7e96b.addTo(map_61632a138018a513136677571ec85f9a);
+        
+    
+            var layer_control_2f813c7604340703f15ddeea5de13527_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_828fb6e493fcb594cc095e37aefe8eaa,
+                },
+                overlays :  {
+                    "Risk Heatmap" : heat_map_f96ecc2bbee8469197ae4d0746b7e96b,
+                },
+            };
+            let layer_control_2f813c7604340703f15ddeea5de13527 = L.control.layers(
+                layer_control_2f813c7604340703f15ddeea5de13527_layers.base_layers,
+                layer_control_2f813c7604340703f15ddeea5de13527_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_61632a138018a513136677571ec85f9a);
+
+        
+</script>
+</html>

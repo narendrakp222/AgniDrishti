@@ -18,7 +18,7 @@ AgniDrishti is a Flask-based disaster intelligence command center for detecting 
 ## Repository Layout
 
 ```text
-AgniDrishti/
+GeoRisk/
 |-- app.py                    Flask application and routes
 |-- config.py                 Runtime configuration placeholder
 |-- requirements.txt          Python dependencies
