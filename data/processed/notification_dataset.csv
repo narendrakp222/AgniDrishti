@@ -1,0 +1,11 @@
+latitude,longitude,event_type,georisk_score,escalation_level,recipient,notification_message,status
+29.22012,88.95742,Other,105.84,CRITICAL,National Disaster Authority,"CRITICAL ALERT: Other detected at (29.22012, 88.95742) GeoRisk=105.84",PENDING
+29.26978,88.90321,Agricultural Burning,93.21,HIGH,State Emergency Center,HIGH ALERT: Agricultural Burning hotspot detected.,PENDING
+8.76202,78.18221,Agricultural Burning,64.58,MEDIUM,District Control Room,MEDIUM ALERT: Monitor hotspot activity.,PENDING
+8.75627,78.18294,Agricultural Burning,73.68,MEDIUM,District Control Room,MEDIUM ALERT: Monitor hotspot activity.,PENDING
+24.45387,68.30828,Agricultural Burning,77.26,MEDIUM,District Control Room,MEDIUM ALERT: Monitor hotspot activity.,PENDING
+24.45394,68.31149,Agricultural Burning,76.86,MEDIUM,District Control Room,MEDIUM ALERT: Monitor hotspot activity.,PENDING
+22.92664,70.10907,Agricultural Burning,65.99,MEDIUM,District Control Room,MEDIUM ALERT: Monitor hotspot activity.,PENDING
+29.9692,72.58241,Agricultural Burning,82.62,MEDIUM,District Control Room,MEDIUM ALERT: Monitor hotspot activity.,PENDING
+29.99058,72.58743,Agricultural Burning,90.96,HIGH,State Emergency Center,HIGH ALERT: Agricultural Burning hotspot detected.,PENDING
+30.27074,73.32553,Agricultural Burning,97.65,HIGH,State Emergency Center,HIGH ALERT: Agricultural Burning hotspot detected.,PENDING
