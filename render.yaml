@@ -1,0 +1,23 @@
+# Render.com web-service definition for AgniDrishti.
+# Alternative to using a Docker image: Render runs the Python build
+# with this file and starts the service with the Procfile's gunicorn
+# command (or the startCommand below).
+#
+# Create the service on Render from your Git repo and set a value for
+# SECRET_KEY in the Render dashboard (Environment section).
+
+services:
+  - type: web
+    name: agnidrishti
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: FLASK_APP
+        value: app.py
+      - key: SECRET_KEY
+        sync: false
+    healthCheckPath: /

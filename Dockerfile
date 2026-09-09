@@ -6,8 +6,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Install only the web runtime (fast, reliable build). The full ML/GIS
+# stack in requirements.txt is only needed by offline processing scripts.
+COPY requirements-web.txt .
+RUN pip install --no-cache-dir -r requirements-web.txt
 
 COPY . .
 
