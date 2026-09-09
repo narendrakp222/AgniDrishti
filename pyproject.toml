@@ -1,0 +1,23 @@
+# Vercel uses this file to (a) detect Flask and resolve the app entrypoint
+# and (b) drive dependency resolution via `uv lock`, which is why it failed
+# before: it was pointing uv at the huge full `requirements.txt` with no
+# lockable project definition.
+#
+# IMPORTANT: This lists ONLY the runtime the deployed serverless functions
+# require (what app.py imports). The heavy ML/GIS stack in requirements.txt
+# is for offline data processing and must NOT be installed on Vercel
+# (it cannot be locked by uv and would exceed function limits).
+
+[project]
+name = "agnidrishti"
+version = "0.1.0"
+description = "AgniDrishti disaster intelligence command center"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.0",
+    "pandas>=2.2",
+    "numpy>=1.26",
+]
+
+[tool.vercel]
+entrypoint = "app:app"
