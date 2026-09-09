@@ -54,8 +54,8 @@ pip install -r requirements.txt
 Copy-Item .env.example .env
 python app.py
 ```
-
-Open https://agnidrishti-dh08.onrender.com
+Deployed on Vercel : https://agni-drishti-wjb5.vercel.app
+Deployed on Render https://agnidrishti-dh08.onrender.com
 
 ## Generate Local Data
 
