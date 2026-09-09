@@ -55,7 +55,7 @@ Copy-Item .env.example .env
 python app.py
 ```
 
-Open https://agnidrishti-ra80.onrender.com
+Open https://agnidrishti-dh08.onrender.com
 
 ## Generate Local Data
 
