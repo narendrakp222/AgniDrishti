@@ -55,7 +55,7 @@ Copy-Item .env.example .env
 python app.py
 ```
 
-Open http://127.0.0.1:5000.
+Open https://agnidrishti-ra80.onrender.com
 
 ## Generate Local Data
 
